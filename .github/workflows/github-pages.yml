@@ -1,0 +1,59 @@
+# Publica o site no GitHub Pages automaticamente a cada alteração no branch main
+# (inclusive as que a Lovable envia). Também dá para rodar à mão em Actions > Run workflow.
+name: Publicar site no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: github-pages/package-lock.json
+
+      - name: Instalar dependências
+        working-directory: github-pages
+        run: npm ci
+
+      - name: Gerar o site
+        run: |
+          ln -s github-pages/node_modules node_modules
+          npm run build --prefix github-pages
+
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar o site gerado
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: github-pages/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
