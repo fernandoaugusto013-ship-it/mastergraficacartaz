@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci --prefix github-pages",
+  "buildCommand": "ln -sfn github-pages/node_modules node_modules && npm run build --prefix github-pages",
+  "outputDirectory": "github-pages/dist",
+  "cleanUrls": true
+}

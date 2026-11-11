@@ -16,6 +16,7 @@ Site da Master Gráfica Cartaz: catálogo de cartazes de oferta para supermercad
 | `src/assets/img/` | Logo, banner e imagens dos cartazes |
 | `github-pages/` | Gera a versão do site publicada no GitHub Pages (usa o mesmo código de `src/`) |
 | `.github/workflows/github-pages.yml` | Publica o site sozinho a cada alteração no branch `main` |
+| `vercel.json` | Configuração para publicar o mesmo site na Vercel |
 | `COMO-RODAR.md` | Como rodar o site no computador |
 
 ## Colocar no GitHub
@@ -66,6 +67,18 @@ Observações:
 - No plano gratuito do GitHub, o Pages só funciona com repositório **público**.
 - **Domínio próprio** (ex.: `mastergraficacartaz.com.br`): em **Settings → Pages → Custom domain**, digite o domínio e siga as instruções de DNS mostradas na tela.
 - A Lovable continua podendo publicar o site no endereço dela. Os dois usam o mesmo código.
+
+## Publicar na Vercel (opcional)
+
+O repositório já tem o `vercel.json` com tudo configurado.
+
+1. Entre em [vercel.com](https://vercel.com) com a conta do GitHub.
+2. Clique em **Add New → Project** e escolha o repositório `mastergraficacartaz` (**Import**).
+3. Não mude nada nas configurações: o `vercel.json` já define instalação, geração e pasta do site. Clique em **Deploy**.
+4. Em cerca de 1 minuto o site fica no ar em `https://mastergraficacartaz.vercel.app` (ou um nome parecido, se esse já existir).
+5. A cada alteração no `main`, a Vercel publica de novo sozinha.
+
+**Domínio próprio:** no projeto da Vercel, **Settings → Domains → Add**, e siga as instruções de DNS.
 
 ## Alterações mais comuns
 
