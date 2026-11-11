@@ -42,7 +42,7 @@ const CATS = [
   { id: "mini", label: "Mini e etiqueta" },
 ];
 
-type P = { code: string; name: string; kind: "liso" | "folha" | "mini" | "splash" | "img" | "bf"; w?: number; h?: number; size: string; cat: string; img?: string; portrait?: boolean; ml?: string };
+type P = { code: string; name: string; kind: "liso" | "folha" | "mini" | "etiqueta" | "splash" | "img" | "bf"; w?: number; h?: number; size: string; cat: string; img?: string; portrait?: boolean; ml?: string };
 // ml = link do anúncio no Mercado Livre. Modelos sem "ml" levam à loja (ML) até terem anúncio próprio.
 const ALL: P[] = [
   { code: "F1", name: "Cartaz Amarelo Liso", kind: "liso", w: 62, h: 92, size: "92 × 62 cm", cat: "oferta" },
@@ -65,7 +65,7 @@ const ALL: P[] = [
   { code: "B16", name: "Cartaz Black Friday Pequeno", kind: "bf", w: 14.5, h: 22, size: "22 × 14,5 cm", cat: "black" },
   { code: "B32", name: "Cartaz Black Friday Prateleira", kind: "bf", w: 10, h: 14.5, size: "14,5 × 10 cm", cat: "black" },
   { code: "9×5", name: "Mini Cartaz Oferta 9×5", kind: "mini", w: 9, h: 5, size: "9 × 5 cm", cat: "mini" },
-  { code: "R5", name: "Mini Cartaz Oferta R5", kind: "mini", w: 9, h: 3, size: "9 × 3 cm", cat: "mini" },
+  { code: "R5", name: "Mini Cartaz Oferta R5", kind: "etiqueta", w: 9, h: 3, size: "9 × 3 cm", cat: "mini" },
 ];
 
 const GUIDE: [string, number, number, string][] = [["F1", 62, 92, "92 × 62"], ["F2", 44, 65, "65 × 44"], ["F4", 31, 44, "44 × 31"], ["F8", 23, 33, "33 × 23"], ["F16", 14.5, 22, "22 × 14,5"], ["F32", 10, 14.5, "14,5 × 10"], ["9×5", 9, 5, "9 × 5"], ["R5", 9, 3, "9 × 3"]];
@@ -145,6 +145,19 @@ function Folha({ w, h, head, className }: { w: number; h: number; head: boolean;
   );
 }
 
+/** Etiqueta de preço 9 × 3 cm (R5): borda vermelha, parte de cima branca e faixa amarela com R$, como o produto impresso */
+function Etiqueta({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 33.3" className={className}>
+      <rect width="100" height="33.3" className="fill-poster-red" />
+      <rect x="1.8" y="1.8" width="96.4" height="29.7" className="fill-white" />
+      <rect x="1.8" y="17.8" width="96.4" height="13.7" className="fill-poster-yellow" />
+      <text x="6" y="29.4" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="9.6" className="fill-poster-red">R$</text>
+      <text x="96.2" y="30.2" textAnchor="end" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="2.6" className="fill-poster-red">CÓD.9x3</text>
+    </svg>
+  );
+}
+
 function Bf({ w, h, className }: { w: number; h: number; className?: string }) {
   const H = Math.round((1000 * h) / w) / 10;
   const pts: string[] = [];
@@ -175,6 +188,7 @@ function Bf({ w, h, className }: { w: number; h: number; className?: string }) {
 function Preview({ p }: { p: P }) {
   if (p.kind === "bf") return <img src={bfImg.url} alt={p.name} loading="lazy" className="poster-shadow h-48 w-auto object-contain" />;
   if (p.kind === "splash") return <Splash className="poster-shadow w-48" />;
+  if (p.kind === "etiqueta") return <Etiqueta className="poster-shadow w-48" />;
   if (p.kind === "img") return <img src={p.img} alt={`${p.name} ${p.size}`} loading="lazy" className={`poster-shadow ${p.portrait ? "h-48 w-auto" : "w-48"}`} />;
   const land = p.w! > p.h!;
   return <Folha w={p.w!} h={p.h!} head={p.kind !== "liso"} className={`poster-shadow ${land ? "w-48" : "h-48 w-auto"}`} />;
@@ -495,9 +509,15 @@ function HomePage() {
                 const W = Math.round(w * 2.6), Hh = Math.round(h * 2.6);
                 return (
                   <div key={code} style={idx(gi)} className="flex flex-col items-center gap-3">
-                    <div aria-hidden="true" className="grow-bar overflow-hidden rounded-[2px] bg-poster-yellow shadow-[var(--shadow-soft)]" style={{ width: W, height: Hh }}>
-                      <div className="bg-poster-red" style={{ height: Math.max(3, Math.round(Hh * (w > h ? 0.4 : 0.2))) }} />
-                    </div>
+                    {code === "R5" ? (
+                      <div aria-hidden="true" className="grow-bar shadow-[var(--shadow-soft)]" style={{ width: W, height: Hh }}>
+                        <Etiqueta className="block h-full w-full" />
+                      </div>
+                    ) : (
+                      <div aria-hidden="true" className="grow-bar overflow-hidden rounded-[2px] bg-poster-yellow shadow-[var(--shadow-soft)]" style={{ width: W, height: Hh }}>
+                        <div className="bg-poster-red" style={{ height: Math.max(3, Math.round(Hh * (w > h ? 0.4 : 0.2))) }} />
+                      </div>
+                    )}
                     <span className="text-center leading-tight">
                       <strong className="block font-display text-lg">{code}</strong>
                       <span className="text-xs text-muted-foreground">{size} cm</span>
