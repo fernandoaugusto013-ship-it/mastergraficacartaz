@@ -42,21 +42,22 @@ const CATS = [
   { id: "mini", label: "Mini e etiqueta" },
 ];
 
-type P = { code: string; name: string; kind: "liso" | "folha" | "mini" | "splash" | "img" | "bf"; w?: number; h?: number; size: string; cat: string; img?: string; portrait?: boolean };
+type P = { code: string; name: string; kind: "liso" | "folha" | "mini" | "splash" | "img" | "bf"; w?: number; h?: number; size: string; cat: string; img?: string; portrait?: boolean; ml?: string };
+// ml = link do anúncio no Mercado Livre. Modelos sem "ml" levam à loja (ML) até terem anúncio próprio.
 const ALL: P[] = [
   { code: "F1", name: "Cartaz Amarelo Liso", kind: "liso", w: 62, h: 92, size: "92 × 62 cm", cat: "oferta" },
   { code: "F1", name: "Cartaz Oferta Gigante", kind: "folha", w: 62, h: 92, size: "92 × 62 cm", cat: "oferta" },
-  { code: "F2", name: "Cartaz Oferta Grande", kind: "folha", w: 44, h: 65, size: "65 × 44 cm", cat: "oferta" },
-  { code: "F4", name: "Cartaz Oferta Médio", kind: "folha", w: 31, h: 44, size: "44 × 31 cm", cat: "oferta" },
-  { code: "F8", name: "Cartaz Oferta", kind: "folha", w: 23, h: 33, size: "33 × 23 cm", cat: "oferta" },
-  { code: "F16", name: "Cartaz Oferta Pequeno", kind: "folha", w: 14.5, h: 22, size: "22 × 14,5 cm", cat: "oferta" },
-  { code: "F32", name: "Cartaz Oferta Prateleira", kind: "folha", w: 10, h: 14.5, size: "14,5 × 10 cm", cat: "oferta" },
-  { code: "S8", name: "Splash Oferta Grande", kind: "splash", size: "33 × 23 cm", cat: "splash" },
-  { code: "S16", name: "Splash Oferta Médio", kind: "splash", size: "22 × 14,5 cm", cat: "splash" },
-  { code: "S32", name: "Splash Oferta Pequeno", kind: "splash", size: "16,5 × 12 cm", cat: "splash" },
-  { code: "H8", name: "Cartaz Hoje é Dia de Hortifrutti", kind: "img", img: A_H8.url, portrait: true, size: "33 × 23 cm", cat: "horti" },
+  { code: "F2", name: "Cartaz Oferta Grande", kind: "folha", w: 44, h: 65, size: "65 × 44 cm", cat: "oferta", ml: "https://www.mercadolivre.com.br/cartaz-de-oferta-duplex-44x65cm-50-unidades/up/MLBU5439471128?pdp_filters=item_id%3AMLB5352522311" },
+  { code: "F4", name: "Cartaz Oferta Médio", kind: "folha", w: 31, h: 44, size: "44 × 31 cm", cat: "oferta", ml: "https://www.mercadolivre.com.br/cartaz-oferta-grande-duplex-31x44cm-50-unidades/up/MLBU5383987893?pdp_filters=item_id%3AMLB5346628035" },
+  { code: "F8", name: "Cartaz Oferta", kind: "folha", w: 23, h: 33, size: "33 × 23 cm", cat: "oferta", ml: "https://www.mercadolivre.com.br/cartaz-de-oferta-duplex-23x33cm-50-unidades/up/MLBU5396962817?pdp_filters=item_id%3AMLB5352671803" },
+  { code: "F16", name: "Cartaz Oferta Pequeno", kind: "folha", w: 14.5, h: 22, size: "22 × 14,5 cm", cat: "oferta", ml: "https://www.mercadolivre.com.br/cartaz-de-oferta-duplex-15x22cm-50-unidades/up/MLBU5409475369?pdp_filters=item_id%3AMLB7775837150" },
+  { code: "F32", name: "Cartaz Oferta Prateleira", kind: "folha", w: 10, h: 14.5, size: "14,5 × 10 cm", cat: "oferta", ml: "https://www.mercadolivre.com.br/cartaz-de-oferta-duplex-10x15cm-50-unidades/up/MLBU5453718168?pdp_filters=item_id%3AMLB7776236472" },
+  { code: "S8", name: "Splash Oferta Grande", kind: "splash", size: "33 × 23 cm", cat: "splash", ml: "https://www.mercadolivre.com.br/cartaz-splash-duplex-oferta-33x23cm-50-unidades/up/MLBU5411133717?pdp_filters=item_id%3AMLB5358560461" },
+  { code: "S16", name: "Splash Oferta Médio", kind: "splash", size: "22 × 14,5 cm", cat: "splash", ml: "https://www.mercadolivre.com.br/cartaz-splash-duplex-oferta-22x15cm-50-unidades/up/MLBU5411806027?pdp_filters=item_id%3AMLB5358807351" },
+  { code: "S32", name: "Splash Oferta Pequeno", kind: "splash", size: "16,5 × 12 cm", cat: "splash", ml: "https://www.mercadolivre.com.br/cartaz-splash-duplex-oferta-16x12cm-50-unidades/up/MLBU5412876881?pdp_filters=item_id%3AMLB5359276673" },
+  { code: "H8", name: "Cartaz Hoje é Dia de Hortifrutti", kind: "img", img: A_H8.url, portrait: true, size: "33 × 23 cm", cat: "horti", ml: "https://www.mercadolivre.com.br/cartaz-de-hortfrutti-duplex-23x33cm-50-unidades/up/MLBU5417649805?pdp_filters=item_id%3AMLB5361399313" },
   { code: "H32", name: "Splash Hoje é Dia de Hortifrutti", kind: "img", img: A_H32.url, size: "16,5 × 12 cm", cat: "horti" },
-  { code: "C8", name: "Cartaz Hoje é Dia de Carne", kind: "img", img: A_C8.url, portrait: true, size: "33 × 23 cm", cat: "carne" },
+  { code: "C8", name: "Cartaz Hoje é Dia de Carne", kind: "img", img: A_C8.url, portrait: true, size: "33 × 23 cm", cat: "carne", ml: "https://www.mercadolivre.com.br/cartaz-de-carne-duplex-23x33cm-50-unidades/up/MLBU5460922556?pdp_filters=item_id%3AMLB7779559090" },
   { code: "C32", name: "Splash Hoje é Dia de Carne", kind: "img", img: A_C32.url, size: "16,5 × 12 cm", cat: "carne" },
   { code: "B1", name: "Cartaz Black Friday Gigante", kind: "bf", w: 62, h: 92, size: "92 × 62 cm", cat: "black" },
   { code: "B2", name: "Cartaz Black Friday Grande", kind: "bf", w: 44, h: 65, size: "65 × 44 cm", cat: "black" },
@@ -469,9 +470,9 @@ function HomePage() {
                   {p.cat === "black" ? (
                     <span aria-disabled="true" className="inline-flex min-h-11 items-center justify-center rounded-full bg-secondary px-4 text-sm font-semibold text-muted-foreground">Produto Indisponível</span>
                   ) : (
-                    <a href={ML} className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-4 text-sm font-semibold text-accent-foreground transition hover:brightness-95">Ver preço no Mercado Livre</a>
+                    <a href={p.ml ?? ML} className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-4 text-sm font-semibold text-accent-foreground transition hover:brightness-95">Ver preço no Mercado Livre</a>
                   )}
-                  <a href={ML} className="inline-flex min-h-10 items-center justify-center text-sm font-medium text-muted-foreground transition hover:text-foreground">Ver detalhes do modelo</a>
+                  <a href={p.ml ?? ML} className="inline-flex min-h-10 items-center justify-center text-sm font-medium text-muted-foreground transition hover:text-foreground">Ver detalhes do modelo</a>
                 </div>
               </div>
             </article>
